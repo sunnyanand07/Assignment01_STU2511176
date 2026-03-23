@@ -1,4 +1,11 @@
--- Dimension Tables
+USE orders;
+
+DROP TABLE IF EXISTS fact_sales;
+DROP TABLE IF EXISTS dim_product;
+DROP TABLE IF EXISTS dim_store;
+DROP TABLE IF EXISTS dim_date;
+
+# Dimension Tables
 
 CREATE TABLE dim_date (
     date_id INT PRIMARY KEY,
@@ -19,7 +26,7 @@ CREATE TABLE dim_product (
     category VARCHAR(50)
 );
 
--- Fact Table
+#Fact Table
 
 CREATE TABLE fact_sales (
     sale_id INT PRIMARY KEY,

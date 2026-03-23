@@ -1,19 +1,20 @@
--- Q1
-SELECT dd.month, dp.category, SUM(fs.revenue)
-FROM fact_sales fs
-JOIN dim_product dp ON fs.product_id = dp.product_id
-JOIN dim_date dd ON fs.date_id = dd.date_id
-GROUP BY dd.month, dp.category;
-
--- Q2
-SELECT store_id, SUM(revenue) AS total
-FROM fact_sales
-GROUP BY store_id
-ORDER BY total DESC
+--Q1: monthly Revenue by Category
+SELECT d.month_name, p.category, SUM(f.revenue) AS total_revenue
+FROM fact_sales f
+JOIN dim_date d ON f.date_id = d.date_id
+JOIN dim_product p ON f.product_id = p.product_id
+GROUP BY d.month_name, p.category
+ORDER BY d.month_name;#Q2: Top 2 Stores 
+SELECT s.store_name, sum(f.revenue) AS total_revenue
+FROM fact_sales f
+JOIN dim_store s ON f.store_id = s.store_id 
+GROUP BY s.store_name
+ORDER BY total_revenue DESC
 LIMIT 2;
 
--- Q3
-SELECT dd.month, SUM(fs.revenue)
-FROM fact_sales fs
-JOIN dim_date dd ON fs.date_id = dd.date_id
-GROUP BY dd.month;
+--Q3: Month-over-month trend
+SELECT d.month, sum(f.revenue) AS total_revenue
+FROM fact_sales f
+join dim_date d ON f.date_id = d.date_id
+GROUP BY d.month
+ORDER BY d.month;
